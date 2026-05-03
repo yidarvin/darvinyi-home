@@ -223,14 +223,9 @@
       border-radius: 16px;
       border: 0.5px solid var(--border-light);
       background: var(--bg-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-      user-select: none;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     .hero-credentials {
@@ -625,7 +620,7 @@
           </div>
 
           <div class="hero-right">
-            <div class="avatar" role="img" aria-label="Avatar — initials DY">DY</div>
+            <img src="avatar.jpg" alt="Darvin Yi" class="avatar">
             <div class="hero-credentials">
               <span>palo alto, ca</span>
               <span>stanford phd · princeton bs</span>
