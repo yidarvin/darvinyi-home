@@ -4,596 +4,218 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Darvin Yi — Director of ML, Upwork</title>
-  <meta name="description" content="Darvin Yi — ML researcher and engineer building AI systems that move from research to reality. Director of ML at Upwork, formerly Stanford, UIC, Cruise, Magic Leap.">
+  <meta name="description" content="Darvin Yi — ML researcher and engineer working on datasets, benchmarks, and evaluation methods for frontier AI. Director of ML at Upwork, formerly Stanford, UIC, Cruise, Magic Leap.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== CSS CUSTOM PROPERTIES ===== */
+    /* ===== TOKENS ===== */
     :root {
-      --bg:             #ffffff;
-      --bg-secondary:   #f6f6f4;
-      --text:           #0f0f0f;
-      --text-muted:     #6b6b6b;
-      --text-faint:     #a0a0a0;
-      --border:         rgba(0,0,0,0.5);
-      --border-light:   rgba(0,0,0,0.1);
-      --pill-border:    rgba(0,0,0,0.3);
-      --tag-bg:         #ededeb;
-      --tag-text:       #6b6b6b;
+      --bg:           #fbfaf7;
+      --bg-2:         #f4f1ea;
+      --ink:          #161412;
+      --ink-2:        #4a463f;
+      --ink-3:        #8a8478;
+      --ink-4:        #b8b1a3;
+      --rule:         rgba(22, 20, 18, 0.10);
+      --rule-2:       rgba(22, 20, 18, 0.20);
+      --accent:       oklch(0.62 0.12 50);          /* terracotta */
+      --accent-soft:  oklch(0.62 0.12 50 / 0.10);
+      --serif:        'DM Serif Display', 'Times New Roman', serif;
+      --sans:         'Outfit', system-ui, sans-serif;
+      --mono:         'DM Mono', ui-monospace, monospace;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg:             #0f0f0f;
-        --bg-secondary:   #181818;
-        --text:           #f0f0ee;
-        --text-muted:     #8a8a8a;
-        --text-faint:     #5a5a5a;
-        --border:         rgba(255,255,255,0.5);
-        --border-light:   rgba(255,255,255,0.08);
-        --pill-border:    rgba(255,255,255,0.25);
-        --tag-bg:         #222222;
-        --tag-text:       #8a8a8a;
+        --bg:         #0f0e0c;
+        --bg-2:       #181612;
+        --ink:        #f0ede6;
+        --ink-2:      #a8a397;
+        --ink-3:      #6b665c;
+        --ink-4:      #4a463e;
+        --rule:       rgba(240, 237, 230, 0.08);
+        --rule-2:     rgba(240, 237, 230, 0.18);
+        --accent:     oklch(0.72 0.12 50);
+        --accent-soft: oklch(0.72 0.12 50 / 0.12);
       }
     }
 
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: var(--sans);
       font-size: 15px;
       line-height: 1.65;
-      color: var(--text);
+      color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
     }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    h1, h2, h3, h4, p { margin: 0; }
 
-    /* ===== FOCUS ===== */
     :focus-visible {
-      outline: 1.5px solid var(--text);
+      outline: 1.5px solid var(--accent);
       outline-offset: 3px;
       border-radius: 2px;
     }
 
-    /* ===== LAYOUT ===== */
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* ===== SECTION DIVIDER ===== */
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .section-label span {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-faint);
-      white-space: nowrap;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 0.5px;
-      background: var(--border-light);
-    }
-
-    /* ===== SECTIONS ===== */
-    section {
-      padding: 4rem 0;
-      border-top: 0.5px solid var(--border-light);
-    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 40px; }
 
     /* ===== NAV ===== */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg);
-      border-bottom: 0.5px solid var(--border-light);
+      position: sticky; top: 0; z-index: 5;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--rule);
     }
-
     .nav-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 720px; margin: 0 auto; padding: 0 40px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
     }
+    .logo { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-decoration: none; color: var(--ink); }
+    .logo b { color: var(--accent); font-weight: 400; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); text-decoration: none; letter-spacing: 0.04em; transition: color .15s; }
+    .nav-links a:hover { color: var(--accent); }
 
-    .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-    }
+    /* ===== SECTIONS ===== */
+    section { padding: 72px 0; border-top: 0.5px solid var(--rule); }
+    #hero { padding: 88px 0 72px; border-top: none; }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.75rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.15s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
+    .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+    .section-label span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+    .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--rule); }
 
     /* ===== HERO ===== */
-    #hero {
-      border-top: none;
-      padding: 5rem 0 4rem;
+    .hero-grid { display: grid; grid-template-columns: 1fr 140px; gap: 48px; align-items: start; }
+    .eyebrow {
+      font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+      letter-spacing: 0.06em; margin-bottom: 22px;
+      display: flex; align-items: center; gap: 10px;
     }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 190px;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .hero-subtitle {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-      margin-bottom: 1.25rem;
-    }
-
-    .hero-h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.4rem, 5.5vw, 3.2rem);
-      line-height: 1.08;
-      color: var(--text);
-      margin-bottom: 1.5rem;
+    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    h1.hero {
+      font-family: var(--serif);
+      font-size: clamp(42px, 5.6vw, 56px);
+      line-height: 1.04;
       font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+      text-wrap: pretty;
     }
-
-    .hero-h1 em { font-style: italic; }
-
-    .hero-bio {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.72;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    /* ===== PILL ===== */
+    h1.hero em { font-style: italic; color: var(--accent); }
+    .hero-bio { font-size: 15px; color: var(--ink-2); line-height: 1.72; margin-bottom: 28px; max-width: 50ch; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
-      display: inline-flex;
-      align-items: center;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.67rem;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      border: 0.5px solid var(--pill-border);
-      border-radius: 999px;
-      padding: 0.35rem 0.9rem;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      display: inline-flex; align-items: center;
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+      color: var(--ink-2); border: 0.5px solid var(--rule-2);
+      border-radius: 999px; padding: 6px 14px; text-decoration: none;
+      transition: background .15s, color .15s, border-color .15s;
     }
+    .pill:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .pill.accent { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+    .pill.accent:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
-    .pill:hover {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text);
-    }
-
-    /* ===== AVATAR ===== */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 16px;
-      border: 0.5px solid var(--border-light);
-      background: var(--bg-secondary);
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-
-    .hero-credentials {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .hero-credentials span {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.63rem;
-      color: var(--text-faint);
-      letter-spacing: 0.04em;
-      display: block;
-    }
+    .hero-right { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .avatar { width: 120px; height: 120px; border-radius: 14px; background: var(--bg-2); object-fit: cover; object-position: center top; }
+    .creds { text-align: center; display: flex; flex-direction: column; gap: 4px; }
+    .creds span { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; }
 
     /* ===== RESEARCH FOCUS ===== */
-    .focus-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border-light);
-      border: 0.5px solid var(--border-light);
-    }
-
-    .focus-card {
-      background: var(--bg-secondary);
-      padding: 1.5rem 1.25rem;
-    }
-
-    .focus-card-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.1em;
-      color: var(--text-faint);
-      margin-bottom: 0.6rem;
-      display: block;
-    }
-
-    .focus-card-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1rem;
-      color: var(--text);
-      margin-bottom: 0.55rem;
-      line-height: 1.2;
-      font-weight: 400;
-    }
-
-    .focus-card-desc {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.62;
-    }
+    .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border: 0.5px solid var(--rule); }
+    .focus-card { background: var(--bg); padding: 24px 22px; }
+    .focus-card .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; display: block; }
+    .focus-card h3 { font-family: var(--serif); font-size: 19px; margin-bottom: 8px; font-weight: 400; }
+    .focus-card p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
 
     /* ===== PROJECTS ===== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1px;
-      background: var(--border-light);
-      border: 0.5px solid var(--border-light);
+    .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border: 0.5px solid var(--rule); }
+    .proj { background: var(--bg); padding: 24px; display: flex; flex-direction: column; }
+    .proj .tag {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-3); background: var(--bg-2);
+      display: inline-block; padding: 3px 8px; border-radius: 3px;
+      margin-bottom: 12px; align-self: flex-start;
     }
-
-    .project-card {
-      background: var(--bg);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--tag-text);
-      background: var(--tag-bg);
-      display: inline-block;
-      padding: 0.18rem 0.48rem;
-      border-radius: 3px;
-      margin-bottom: 0.8rem;
-    }
-
-    .project-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      line-height: 1.2;
-      font-weight: 400;
-    }
-
-    .project-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 1.25rem;
-    }
-
-    .project-footer {
-      display: flex;
-      gap: 0.85rem;
-      align-items: center;
-    }
-
-    .project-link {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-bottom: 0.5px solid var(--border-light);
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .project-link:hover {
-      color: var(--text);
-      border-color: var(--text);
-    }
-
-    /* TODO: Remove [data-coming-soon] and tabindex="-1" when projects go live */
-    .project-link[data-coming-soon] {
-      opacity: 0.4;
-      pointer-events: none;
-      cursor: default;
-    }
+    .proj h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 8px; line-height: 1.2; }
+    .proj p { font-size: 13.5px; color: var(--ink-2); line-height: 1.62; flex: 1; margin-bottom: 18px; }
+    .proj-foot { display: flex; gap: 14px; }
+    .proj-foot a { font-family: var(--mono); font-size: 10.5px; color: var(--ink-2); text-decoration: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 1px; transition: color .15s, border-color .15s; }
+    .proj-foot a:hover { color: var(--accent); border-color: var(--accent); }
 
     /* ===== PUBLICATIONS ===== */
-    .pub-list {
-      display: flex;
-      flex-direction: column;
+    .pubs { display: flex; flex-direction: column; }
+    .pub { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 22px 0; border-bottom: 0.5px solid var(--rule); align-items: start; }
+    .pub:first-child { border-top: 0.5px solid var(--rule); }
+    .pub .v { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--ink-3); margin-bottom: 6px; }
+    .pub h4 { font-size: 14.5px; font-weight: 500; margin-bottom: 6px; line-height: 1.45; }
+    .pub h4 a { text-decoration: none; }
+    .pub h4 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 0.5px; }
+    .pub .auth { font-size: 12.5px; color: var(--ink-2); }
+    .pub .auth strong { color: var(--ink); font-weight: 500; }
+    .pub .badge {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em;
+      color: var(--ink-3); border: 0.5px solid var(--rule);
+      padding: 4px 9px; border-radius: 3px;
+      height: fit-content; white-space: nowrap; margin-top: 2px;
     }
-
-    .pub-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 1.5rem;
-      align-items: start;
-      padding: 1.25rem 0;
-      border-bottom: 0.5px solid var(--border-light);
-    }
-
-    .pub-row:first-child {
-      border-top: 0.5px solid var(--border-light);
-    }
-
-    .pub-venue {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.04em;
-      color: var(--text-faint);
-      margin-bottom: 0.35rem;
-    }
-
-    .pub-title {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.3rem;
-      line-height: 1.45;
-    }
-
-    .pub-authors {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .pub-authors strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .pub-badge {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.06em;
-      color: var(--text-faint);
-      border: 0.5px solid var(--border-light);
-      padding: 0.2rem 0.55rem;
-      border-radius: 3px;
-      white-space: nowrap;
-      align-self: start;
-      margin-top: 3px;
-    }
-
-    .pub-footer {
-      margin-top: 1.5rem;
-    }
-
-    .pub-footer a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      border-bottom: 0.5px solid var(--border-light);
-      padding-bottom: 1px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-
-    .pub-footer a:hover {
-      color: var(--text);
-      border-color: var(--text);
-    }
-
-    .pub-badge.impact {
-      color: var(--text-muted);
-      border-color: var(--border-light);
-      background: var(--bg-secondary);
-    }
-
-    .pub-title a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .pub-title a:hover {
-      text-decoration: underline;
-      text-underline-offset: 2px;
-      text-decoration-thickness: 0.5px;
-    }
-
-    /* ===== EXPERIENCE ===== */
-    .exp-list { display: flex; flex-direction: column; }
-
-    .exp-row {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 1.5rem;
-      padding: 1.25rem 0;
-      border-bottom: 0.5px solid var(--border-light);
-    }
-
-    .exp-row:first-child { border-top: 0.5px solid var(--border-light); }
-
-    .exp-years {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-faint);
-      letter-spacing: 0.02em;
-      padding-top: 2px;
-      line-height: 1.5;
-    }
-
-    .exp-role {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.2rem;
-      line-height: 1.4;
-    }
-
-    .exp-org {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    .pub .badge.hot { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); background: var(--accent-soft); }
+    .pub-foot { margin-top: 24px; }
+    .pub-foot a { font-family: var(--mono); font-size: 11px; color: var(--ink-2); text-decoration: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 1px; transition: color .15s, border-color .15s; }
+    .pub-foot a:hover { color: var(--accent); border-color: var(--accent); }
 
     /* ===== ABOUT ===== */
-    .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 190px;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .about-bio p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-
-    .about-bio p:last-child { margin-bottom: 0; }
-
-    .about-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 140px; gap: 48px; align-items: start; }
+    .about p { font-size: 14.5px; color: var(--ink-2); line-height: 1.78; margin-bottom: 16px; }
+    .about p:last-child { margin-bottom: 0; }
+    .about-side { display: flex; flex-direction: column; gap: 8px; }
 
     /* ===== FOOTER ===== */
-    footer {
-      border-top: 0.5px solid var(--border-light);
-      padding: 2rem 0;
-    }
+    footer { border-top: 0.5px solid var(--rule); padding: 32px 0; }
+    .footer-inner { max-width: 720px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; }
+    .footer-inner span, .footer-inner a { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; text-decoration: none; transition: color .15s; }
+    .footer-inner a:hover { color: var(--accent); }
 
-    .footer-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
     }
-
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.63rem;
-      color: var(--text-faint);
-      letter-spacing: 0.04em;
-    }
-
-    .footer-back {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.63rem;
-      color: var(--text-faint);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.15s;
-    }
-
-    .footer-back:hover { color: var(--text); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 680px) {
-      .hero-inner,
-      .about-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-right {
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 1.25rem;
-      }
-
-      .hero-credentials { text-align: left; }
-
-      .focus-grid { grid-template-columns: repeat(2, 1fr); }
-
-      .about-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-      }
+      .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .hero-right { flex-direction: row; justify-content: flex-start; gap: 16px; }
+      .creds { text-align: left; }
+      .focus-grid, .proj-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
     }
 
-    @media (max-width: 420px) {
-      .focus-grid { grid-template-columns: 1fr; }
-      .nav-links { gap: 1rem; }
-
-      .pub-row {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-
-      .pub-badge { align-self: auto; }
+    @media (max-width: 480px) {
+      .nav-links { gap: 14px; }
+      .pub { grid-template-columns: 1fr; gap: 8px; }
+      .pub .badge { align-self: flex-start; margin-top: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav aria-label="Primary navigation">
+  <nav aria-label="Primary">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">darvinyi.com</a>
+      <a href="#hero" class="logo">darvinyi<b>.com</b></a>
       <ul class="nav-links" role="list">
-        <li><a href="#projects">projects</a></li>
         <li><a href="#research">research</a></li>
-        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#publications">publications</a></li>
         <li><a href="#about">about</a></li>
       </ul>
     </div>
@@ -602,131 +224,123 @@
   <main>
 
     <!-- HERO -->
-    <section id="hero" aria-label="Introduction">
-      <div class="container">
-        <div class="hero-inner">
-
-          <div class="hero-left">
-            <p class="hero-subtitle">darvin yi — director of ml, upwork · palo alto</p>
-            <h1 class="hero-h1">frontier AI, <em>shipped</em>.</h1>
-            <p class="hero-bio">I build AI systems that move from research to reality. Currently leading ML at Upwork, focused on agentic AI. Former researcher at Stanford, UIC, Cruise, and Magic Leap — with work spanning medical imaging, computer vision, and autonomous systems.</p>
-            <div class="hero-links">
-              <a href="https://www.linkedin.com/in/darvinyi/" class="pill" target="_blank" rel="noopener noreferrer">linkedin</a>
-              <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&hl=en" class="pill" target="_blank" rel="noopener noreferrer">google scholar</a>
-              <a href="https://photos.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">photography</a>
+    <section id="hero" class="reveal" aria-label="Introduction">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">director of machine learning, upwork · palo alto, ca</p>
+            <h1 class="hero">Measuring AI, in the <em>real world</em>.</h1>
+            <p class="hero-bio">I'm a machine learning researcher and engineer working on the datasets, benchmarks, and evaluation methods that show whether AI systems actually hold up outside the lab. Currently leading ML at Upwork on agentic evaluation. Previously Stanford, UIC, Cruise, Magic Leap — across medical imaging, computer vision, and autonomous systems.</p>
+            <div class="pills">
+              <a href="https://www.linkedin.com/in/darvinyi/" class="pill accent" target="_blank" rel="noopener noreferrer">linkedin</a>
+              <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">google scholar</a>
               <a href="https://research.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">research</a>
+              <a href="https://photos.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">photography</a>
               <a href="https://www.instagram.com/darvinistrying/" class="pill" target="_blank" rel="noopener noreferrer">instagram</a>
             </div>
           </div>
-
           <div class="hero-right">
             <img src="avatar.jpg" alt="Darvin Yi" class="avatar">
-            <div class="hero-credentials">
+            <div class="creds">
               <span>palo alto, ca</span>
               <span>stanford phd · princeton bs</span>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
     <!-- RESEARCH FOCUS -->
-    <section id="research-focus" aria-label="Research focus areas">
-      <div class="container">
+    <section id="research" class="reveal" aria-label="Research focus">
+      <div class="wrap">
         <div class="section-label"><span>research focus</span></div>
         <div class="focus-grid" role="list">
-
           <div class="focus-card" role="listitem">
-            <span class="focus-card-num">01</span>
-            <h3 class="focus-card-title">Agentic AI</h3>
-            <p class="focus-card-desc">Multi-step reasoning agents that take real-world action across tools, APIs, and workflows.</p>
+            <span class="n">01</span>
+            <h3>Benchmarks</h3>
+            <p>Designing dynamic, real-world benchmarks that reflect how AI systems perform once they leave the lab.</p>
           </div>
-
           <div class="focus-card" role="listitem">
-            <span class="focus-card-num">02</span>
-            <h3 class="focus-card-title">Foundational AIML</h3>
-            <p class="focus-card-desc">Core ML research — learning algorithms, generalization, and representation at scale.</p>
+            <span class="n">02</span>
+            <h3>Evaluation</h3>
+            <p>Methods for measuring agent capability, generalization, and reliability beyond static test sets.</p>
           </div>
-
           <div class="focus-card" role="listitem">
-            <span class="focus-card-num">03</span>
-            <h3 class="focus-card-title">Computer Vision</h3>
-            <p class="focus-card-desc">Detection, segmentation, and understanding of visual data across medical and real-world domains.</p>
+            <span class="n">03</span>
+            <h3>Datasets</h3>
+            <p>Building and releasing public datasets — organ segmentation, brain MRI, mammography — that move fields forward.</p>
           </div>
-
           <div class="focus-card" role="listitem">
-            <span class="focus-card-num">04</span>
-            <h3 class="focus-card-title">Research → Industry</h3>
-            <p class="focus-card-desc">Bridging frontier methods to shipped products. From paper to production.</p>
+            <span class="n">04</span>
+            <h3>Research → Production</h3>
+            <p>Translating frontier methods into shipped systems, with measurement at every step.</p>
           </div>
-
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" aria-label="Projects">
-      <div class="container">
-        <div class="section-label"><span>projects</span></div>
-        <div class="projects-grid">
+    <section id="projects" class="reveal" aria-label="Projects">
+      <div class="wrap">
+        <div class="section-label"><span>selected projects</span></div>
+        <div class="proj-grid">
 
-          <article class="project-card">
-            <span class="project-tag">app &middot; psychology</span>
-            <h3 class="project-name">Values Sorter</h3>
-            <p class="project-desc">Sort 107 personal values by importance, track how they shift over time, and see trends across sessions. A reflective tool for understanding what actually matters to you.</p>
-            <div class="project-footer">
-              <a href="https://values.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">values.darvinyi.com &rarr;</a>
-              <a href="https://github.com/yidarvin/darvinyi-values" class="project-link" target="_blank" rel="noopener noreferrer">github</a>
+          <article class="proj">
+            <span class="tag">tool · ai research</span>
+            <h3>Bench Intel</h3>
+            <p>A benchmark intelligence platform for tracking AI model performance. Compare models, explore correlations across evals, and verify third-party benchmark results.</p>
+            <div class="proj-foot">
+              <a href="https://benchmarks.darvinyi.com" target="_blank" rel="noopener noreferrer">benchmarks.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-benchmark-analysis" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="project-card">
-            <span class="project-tag">app &middot; social</span>
-            <h3 class="project-name">Chonky Cat Movies</h3>
-            <p class="project-desc">Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch next, and track what you've seen — with streaming availability built in.</p>
-            <div class="project-footer">
-              <a href="https://movies.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">movies.darvinyi.com &rarr;</a>
-              <a href="https://github.com/yidarvin/darvinyi-movies" class="project-link" target="_blank" rel="noopener noreferrer">github</a>
+          <article class="proj">
+            <span class="tag">tool · research</span>
+            <h3>Research Topic Explorer</h3>
+            <p>Search any research area and get an interactive citation graph. Expand nodes, filter by year or citation count, and map a field visually.</p>
+            <div class="proj-foot">
+              <a href="https://research-topic.darvinyi.com" target="_blank" rel="noopener noreferrer">research-topic.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-research-topic" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="project-card">
-            <span class="project-tag">tool &middot; ai research</span>
-            <h3 class="project-name">Bench Intel</h3>
-            <p class="project-desc">A benchmark intelligence platform for tracking AI model performance. Compare models side-by-side, explore correlations across evals, and verify third-party benchmark results.</p>
-            <div class="project-footer">
-              <a href="https://benchmarks.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">benchmarks.darvinyi.com &rarr;</a>
-              <a href="https://github.com/yidarvin/darvinyi-benchmark-analysis" class="project-link" target="_blank" rel="noopener noreferrer">github</a>
+          <article class="proj">
+            <span class="tag">app · psychology</span>
+            <h3>Values Sorter</h3>
+            <p>Sort 107 personal values by importance, track how they shift across sessions, and see what consistently rises to the top.</p>
+            <div class="proj-foot">
+              <a href="https://values.darvinyi.com" target="_blank" rel="noopener noreferrer">values.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-values" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="project-card">
-            <span class="project-tag">tool &middot; research</span>
-            <h3 class="project-name">Research Topic Explorer</h3>
-            <p class="project-desc">Search any research area and get an interactive citation graph. Explore the landscape of papers, expand nodes, and filter by year or citation count to map a field visually.</p>
-            <div class="project-footer">
-              <a href="https://research-topic.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">research-topic.darvinyi.com &rarr;</a>
-              <a href="https://github.com/yidarvin/darvinyi-research-topic" class="project-link" target="_blank" rel="noopener noreferrer">github</a>
+          <article class="proj">
+            <span class="tag">app · social</span>
+            <h3>Chonky Cat Movies</h3>
+            <p>Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch, and track what everyone has seen.</p>
+            <div class="proj-foot">
+              <a href="https://movies.darvinyi.com" target="_blank" rel="noopener noreferrer">movies.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-movies" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="project-card">
-            <span class="project-tag">app &middot; ai</span>
-            <h3 class="project-name">Daily Tarot</h3>
-            <p class="project-desc">AI-powered tarot readings personalized to you. Draw cards, get interpretations streamed by Claude, and build a history of readings over time across spreads.</p>
-            <div class="project-footer">
-              <a href="https://tarot.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com &rarr;</a>
-              <a href="https://github.com/yidarvin/darvinyi-tarot" class="project-link" target="_blank" rel="noopener noreferrer">github</a>
+          <article class="proj">
+            <span class="tag">app · ai</span>
+            <h3>Daily Tarot</h3>
+            <p>AI-powered tarot readings. Draw cards, get interpretations streamed by Claude, and build a history of readings across spreads.</p>
+            <div class="proj-foot">
+              <a href="https://tarot.darvinyi.com" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-tarot" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="project-card">
-            <span class="project-tag">site &middot; photography</span>
-            <h3 class="project-name">Photography</h3>
-            <p class="project-desc">A clean, minimal portfolio of photo albums. Browse collections in a masonry grid and view full-size images in an interactive lightbox.</p>
-            <div class="project-footer">
-              <a href="https://photos.darvinyi.com" class="project-link" target="_blank" rel="noopener noreferrer">photos.darvinyi.com &rarr;</a>
+          <article class="proj">
+            <span class="tag">site · photography</span>
+            <h3>Photography</h3>
+            <p>A small portfolio of photo albums. Browse collections in a masonry grid and view full-size in an interactive lightbox.</p>
+            <div class="proj-foot">
+              <a href="https://photos.darvinyi.com" target="_blank" rel="noopener noreferrer">photos.darvinyi.com →</a>
             </div>
           </article>
 
@@ -734,153 +348,107 @@
       </div>
     </section>
 
-    <!-- SELECTED RESEARCH -->
-    <section id="research" aria-label="Selected research publications">
-      <div class="container">
-        <div class="section-label"><span>selected research — 3,347+ citations</span></div>
-        <div class="pub-list" role="list">
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="reveal" aria-label="Selected publications">
+      <div class="wrap">
+        <div class="section-label"><span>selected publications</span></div>
+        <div class="pubs" role="list">
 
-          <div class="pub-row" role="listitem">
+          <div class="pub" role="listitem">
             <div>
-              <p class="pub-venue">agentic ai · upwork · 2025</p>
-              <p class="pub-title"><a href="https://arxiv.org/abs/2511.12306" target="_blank" rel="noopener noreferrer">UpBench: A Dynamically Evolving Real-World Labor-Market Agentic Benchmark</a></p>
-              <p class="pub-authors"><strong>D. Yi</strong>, T. Liu, M. Terzolo, L. Hasson, A. Sinha, P. Mendes, A. Rabinovich</p>
+              <p class="v">agentic ai · upwork · 2025</p>
+              <h4><a href="https://arxiv.org/abs/2511.12306" target="_blank" rel="noopener noreferrer">UpBench: A Dynamically Evolving Real-World Labor-Market Agentic Benchmark</a></h4>
+              <p class="auth"><strong>D. Yi</strong>, T. Liu, M. Terzolo, L. Hasson, A. Sinha, P. Mendes, A. Rabinovich</p>
             </div>
-            <span class="pub-badge impact">new · 2025</span>
+            <span class="badge hot">new · 2025</span>
           </div>
 
-          <div class="pub-row" role="listitem">
+          <div class="pub" role="listitem">
             <div>
-              <p class="pub-venue">mammography · jama network open · 2020</p>
-              <p class="pub-title"><a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2761795" target="_blank" rel="noopener noreferrer">Evaluation of Combined AI and Radiologist Assessment to Interpret Screening Mammograms</a></p>
-              <p class="pub-authors">T. Schaffter, D. Buist, C.I. Lee, ..., <strong>D. Yi</strong>, ..., G. Stolovitzky — DM DREAM Consortium</p>
+              <p class="v">mammography · jama network open · 2020</p>
+              <h4><a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2761795" target="_blank" rel="noopener noreferrer">Evaluation of Combined AI and Radiologist Assessment to Interpret Screening Mammograms</a></h4>
+              <p class="auth">T. Schaffter, D. Buist, C.I. Lee, …, <strong>D. Yi</strong>, …, G. Stolovitzky — DM DREAM Consortium</p>
             </div>
-            <span class="pub-badge impact">high impact</span>
+            <span class="badge">high impact</span>
           </div>
 
-          <div class="pub-row" role="listitem">
+          <div class="pub" role="listitem">
             <div>
-              <p class="pub-venue">federated learning · jamia · npj digital medicine · 2018–2021</p>
-              <p class="pub-title"><a href="https://academic.oup.com/jamia/article/25/8/945/4956468" target="_blank" rel="noopener noreferrer">Distributed Deep Learning Without Sharing Patient Data</a></p>
-              <p class="pub-authors">K. Chang, N. Balachandar, <strong>D. Yi</strong>, et al.</p>
+              <p class="v">federated learning · jamia · 2018</p>
+              <h4><a href="https://academic.oup.com/jamia/article/25/8/945/4956468" target="_blank" rel="noopener noreferrer">Distributed Deep Learning Without Sharing Patient Data</a></h4>
+              <p class="auth">K. Chang, N. Balachandar, <strong>D. Yi</strong>, et al.</p>
             </div>
-            <span class="pub-badge impact">~500 citations</span>
+            <span class="badge">~500 citations</span>
           </div>
 
-          <div class="pub-row" role="listitem">
+          <div class="pub" role="listitem">
             <div>
-              <p class="pub-venue">organ segmentation · nature scientific data · 2020</p>
-              <p class="pub-title"><a href="https://www.nature.com/articles/s41597-020-00715-8" target="_blank" rel="noopener noreferrer">CT-ORG: A New Dataset for Multiple Organ Segmentation in Computed Tomography</a></p>
-              <p class="pub-authors">B. Rister, <strong>D. Yi</strong>, K. Shivakumar, T. Nobashi, D.L. Rubin</p>
+              <p class="v">organ segmentation · nature scientific data · 2020</p>
+              <h4><a href="https://www.nature.com/articles/s41597-020-00715-8" target="_blank" rel="noopener noreferrer">CT-ORG: A New Dataset for Multiple Organ Segmentation in Computed Tomography</a></h4>
+              <p class="auth">B. Rister, <strong>D. Yi</strong>, K. Shivakumar, T. Nobashi, D.L. Rubin</p>
             </div>
-            <span class="pub-badge">167 citations</span>
+            <span class="badge">public dataset</span>
           </div>
 
-          <div class="pub-row" role="listitem">
+          <div class="pub" role="listitem">
             <div>
-              <p class="pub-venue">brain metastases · jmri · stanford aimi · 2019</p>
-              <p class="pub-title"><a href="https://arxiv.org/abs/1903.07988" target="_blank" rel="noopener noreferrer">Deep Learning Enables Automatic Detection and Segmentation of Brain Metastases on Multi-Sequence MRI</a></p>
-              <p class="pub-authors">E. Grøvik, <strong>D. Yi</strong>, M. Iv, E. Tong, D.L. Rubin, G. Zaharchuk</p>
+              <p class="v">brain metastases · jmri · stanford aimi · 2019</p>
+              <h4><a href="https://arxiv.org/abs/1903.07988" target="_blank" rel="noopener noreferrer">Deep Learning Enables Automatic Detection and Segmentation of Brain Metastases on Multi-Sequence MRI</a></h4>
+              <p class="auth">E. Grøvik, <strong>D. Yi</strong>, M. Iv, E. Tong, D.L. Rubin, G. Zaharchuk</p>
             </div>
-            <span class="pub-badge">public dataset</span>
+            <span class="badge">public dataset</span>
           </div>
 
         </div>
-        <div class="pub-footer">
+        <div class="pub-foot">
           <a href="https://research.darvinyi.com" target="_blank" rel="noopener noreferrer">all publications → research.darvinyi.com</a>
         </div>
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" aria-label="Work experience and education">
-      <div class="container">
-        <div class="section-label"><span>experience</span></div>
-        <div class="exp-list" role="list">
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2025 → now</span>
-            <div>
-              <p class="exp-role">Director of Machine Learning</p>
-              <p class="exp-org">Upwork — Agentic AI, Palo Alto</p>
-            </div>
-          </div>
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2020 → 2025</span>
-            <div>
-              <p class="exp-role">Assistant Professor &amp; Co-Executive Director, Ai-O</p>
-              <p class="exp-org">University of Illinois Chicago — Ophthalmology &amp; Health Equity in ML</p>
-            </div>
-          </div>
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2023</span>
-            <div>
-              <p class="exp-role">Staff Applied Research Scientist</p>
-              <p class="exp-org">Cruise — Autonomous Vehicles, SF</p>
-            </div>
-          </div>
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2020 → 2023</span>
-            <div>
-              <p class="exp-role">Principal Computer Vision Scientist</p>
-              <p class="exp-org">Sirona Medical</p>
-            </div>
-          </div>
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2018 → 2020</span>
-            <div>
-              <p class="exp-role">Deep Learning Scientist, Human-Centered AI</p>
-              <p class="exp-org">Magic Leap — Sunnyvale</p>
-            </div>
-          </div>
-
-          <div class="exp-row" role="listitem">
-            <span class="exp-years">2014 → 2020</span>
-            <div>
-              <p class="exp-role">PhD, Biomedical Informatics</p>
-              <p class="exp-org">Stanford University</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- ABOUT -->
-    <section id="about" aria-label="About Darvin Yi">
-      <div class="container">
+    <section id="about" class="reveal" aria-label="About">
+      <div class="wrap">
         <div class="section-label"><span>about</span></div>
-        <div class="about-inner">
-
-          <div class="about-bio">
-            <p>I'm a machine learning researcher and engineer interested in building AI that works in the real world — not just on benchmarks.</p>
-            <p>My career has moved between academia and industry: a Stanford PhD in biomedical informatics, research roles at Magic Leap, Sirona, and Cruise, five years directing an AI center at UIC, and now leading ML at Upwork where I focus on agentic AI systems.</p>
-            <p>Outside of work, I'm a photographer, a builder of small web things, and someone trying to live a little more intentionally.</p>
+        <div class="about-grid">
+          <div class="about">
+            <p>I'm an ML researcher and engineer focused on how we measure AI — the datasets, benchmarks, and evaluation methods that decide whether a system actually works once it meets real users.</p>
+            <p>My career has moved between academia and industry: a Stanford PhD in biomedical informatics, research at Magic Leap, Sirona, and Cruise, five years co-leading an AI center at UIC, and now leading ML at Upwork on agentic evaluation.</p>
+            <p>Outside work I make small web tools, take photographs, and try to live a little more intentionally.</p>
           </div>
-
-          <div class="about-links">
+          <div class="about-side">
             <a href="https://www.linkedin.com/in/darvinyi/" class="pill" target="_blank" rel="noopener noreferrer">linkedin</a>
-            <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&hl=en" class="pill" target="_blank" rel="noopener noreferrer">3,347+ citations</a>
-            <a href="https://www.instagram.com/darvinistrying/" class="pill" target="_blank" rel="noopener noreferrer">instagram</a>
+            <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">scholar</a>
+            <a href="/cdn-cgi/l/email-protection#751d1c35111407031c1b0c1c5b161a18" class="pill accent">say hi</a>
           </div>
-
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <span class="footer-copy">© 2026 darvin yi</span>
-      <a href="#hero" class="footer-back">back to top ↑</a>
+      <span>© 2026 darvin yi</span>
+      <a href="#hero">back to top ↑</a>
     </div>
   </footer>
 
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Subtle scroll reveal — same DNA as the canvas preview.
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (e) { e.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
 </body>
 </html>
