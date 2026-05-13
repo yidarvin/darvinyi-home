@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ===== TOKENS ===== */
@@ -21,11 +21,11 @@
       --ink-4:        #b8b1a3;
       --rule:         rgba(22, 20, 18, 0.10);
       --rule-2:       rgba(22, 20, 18, 0.20);
-      --accent:       oklch(0.62 0.12 50);          /* terracotta */
-      --accent-soft:  oklch(0.62 0.12 50 / 0.10);
+      --accent:       oklch(0.62 0.16 195);          /* cyan */
+      --accent-soft:  oklch(0.62 0.16 195 / 0.10);
       --serif:        'DM Serif Display', 'Times New Roman', serif;
-      --sans:         'Outfit', system-ui, sans-serif;
-      --mono:         'DM Mono', ui-monospace, monospace;
+      --sans:         'Space Grotesk', system-ui, sans-serif;
+      --mono:         'JetBrains Mono', ui-monospace, monospace;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -38,8 +38,8 @@
         --ink-4:      #4a463e;
         --rule:       rgba(240, 237, 230, 0.08);
         --rule-2:     rgba(240, 237, 230, 0.18);
-        --accent:     oklch(0.72 0.12 50);
-        --accent-soft: oklch(0.72 0.12 50 / 0.12);
+        --accent:     oklch(0.72 0.16 195);
+        --accent-soft: oklch(0.72 0.16 195 / 0.12);
       }
     }
 
@@ -150,6 +150,21 @@
     .proj-foot a { font-family: var(--mono); font-size: 10.5px; color: var(--ink-2); text-decoration: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 1px; transition: color .15s, border-color .15s; }
     .proj-foot a:hover { color: var(--accent); border-color: var(--accent); }
 
+    /* ===== PROJECT SUBSECTIONS ===== */
+    .proj-subsection {
+      grid-column: 1 / -1;
+      background: var(--bg-2);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .proj-subsection span {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-3);
+    }
+    .proj-subsection::after { content: ''; flex: 1; height: 0.5px; background: var(--rule-2); }
+
     /* ===== PUBLICATIONS ===== */
     .pubs { display: flex; flex-direction: column; }
     .pub { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 22px 0; border-bottom: 0.5px solid var(--rule); align-items: start; }
@@ -257,23 +272,23 @@
         <div class="focus-grid" role="list">
           <div class="focus-card" role="listitem">
             <span class="n">01</span>
-            <h3>Benchmarks</h3>
-            <p>Designing dynamic, real-world benchmarks that reflect how AI systems perform once they leave the lab.</p>
+            <h3>Benchmarks and Evaluations</h3>
+            <p>Designing dynamic, real-world benchmarks and evaluation methods that reveal how AI systems truly perform outside the lab.</p>
           </div>
           <div class="focus-card" role="listitem">
             <span class="n">02</span>
-            <h3>Evaluation</h3>
-            <p>Methods for measuring agent capability, generalization, and reliability beyond static test sets.</p>
+            <h3>Computer Vision</h3>
+            <p>Medical imaging, segmentation, object detection, and depth estimation across clinical, autonomous, and augmented reality systems.</p>
           </div>
           <div class="focus-card" role="listitem">
             <span class="n">03</span>
-            <h3>Datasets</h3>
-            <p>Building and releasing public datasets — organ segmentation, brain MRI, mammography — that move fields forward.</p>
+            <h3>AIML Foundations</h3>
+            <p>Core methods in deep learning, statistical learning, and representation that underpin modern AI systems and frontier research.</p>
           </div>
           <div class="focus-card" role="listitem">
             <span class="n">04</span>
-            <h3>Research → Production</h3>
-            <p>Translating frontier methods into shipped systems, with measurement at every step.</p>
+            <h3>Productionalizing Research</h3>
+            <p>Translating frontier methods into shipped systems, with measurement and reliability built in at every step.</p>
           </div>
         </div>
       </div>
@@ -284,6 +299,8 @@
       <div class="wrap">
         <div class="section-label"><span>selected projects</span></div>
         <div class="proj-grid">
+
+          <div class="proj-subsection"><span>Research Focused</span></div>
 
           <article class="proj">
             <span class="tag">tool · ai research</span>
@@ -306,34 +323,16 @@
           </article>
 
           <article class="proj">
-            <span class="tag">app · psychology</span>
-            <h3>Values Sorter</h3>
-            <p>Sort 107 personal values by importance, track how they shift across sessions, and see what consistently rises to the top.</p>
+            <span class="tag">book · ai &amp; ml</span>
+            <h3>ML Textbook</h3>
+            <p>A 17-chapter interactive web textbook on machine learning — from statistical foundations to AI agents, with embedded visualizations you can explore hands-on.</p>
             <div class="proj-foot">
-              <a href="https://values.darvinyi.com" target="_blank" rel="noopener noreferrer">values.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-values" target="_blank" rel="noopener noreferrer">github</a>
+              <a href="https://textbook.darvinyi.com" target="_blank" rel="noopener noreferrer">textbook.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-textbook" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
-          <article class="proj">
-            <span class="tag">app · social</span>
-            <h3>Chonky Cat Movies</h3>
-            <p>Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch, and track what everyone has seen.</p>
-            <div class="proj-foot">
-              <a href="https://movies.darvinyi.com" target="_blank" rel="noopener noreferrer">movies.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-movies" target="_blank" rel="noopener noreferrer">github</a>
-            </div>
-          </article>
-
-          <article class="proj">
-            <span class="tag">app · ai</span>
-            <h3>Daily Tarot</h3>
-            <p>AI-powered tarot readings. Draw cards, get interpretations streamed by Claude, and build a history of readings across spreads.</p>
-            <div class="proj-foot">
-              <a href="https://tarot.darvinyi.com" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-tarot" target="_blank" rel="noopener noreferrer">github</a>
-            </div>
-          </article>
+          <div class="proj-subsection"><span>Photography</span></div>
 
           <article class="proj">
             <span class="tag">site · photography</span>
@@ -363,12 +362,43 @@
           </article>
 
           <article class="proj">
-            <span class="tag">book · ai &amp; ml</span>
-            <h3>ML Textbook</h3>
-            <p>A 17-chapter interactive web textbook on machine learning — from statistical foundations to AI agents, with embedded visualizations you can explore hands-on.</p>
+            <span class="tag">site · family</span>
+            <h3>Family Photos</h3>
+            <p>A private collection of raw, unfiltered family photos — a running archive of everyday moments shared with family.</p>
             <div class="proj-foot">
-              <a href="https://textbook.darvinyi.com" target="_blank" rel="noopener noreferrer">textbook.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-textbook" target="_blank" rel="noopener noreferrer">github</a>
+              <a href="https://family.darvinyi.com" target="_blank" rel="noopener noreferrer">family.darvinyi.com →</a>
+            </div>
+          </article>
+
+          <div class="proj-subsection"><span>Web Apps</span></div>
+
+          <article class="proj">
+            <span class="tag">app · psychology</span>
+            <h3>Values Sorter</h3>
+            <p>Sort 107 personal values by importance, track how they shift across sessions, and see what consistently rises to the top.</p>
+            <div class="proj-foot">
+              <a href="https://values.darvinyi.com" target="_blank" rel="noopener noreferrer">values.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-values" target="_blank" rel="noopener noreferrer">github</a>
+            </div>
+          </article>
+
+          <article class="proj">
+            <span class="tag">app · social</span>
+            <h3>Chonky Cat Movies</h3>
+            <p>Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch, and track what everyone has seen.</p>
+            <div class="proj-foot">
+              <a href="https://movies.darvinyi.com" target="_blank" rel="noopener noreferrer">movies.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-movies" target="_blank" rel="noopener noreferrer">github</a>
+            </div>
+          </article>
+
+          <article class="proj">
+            <span class="tag">app · ai</span>
+            <h3>Daily Tarot</h3>
+            <p>AI-powered tarot readings. Draw cards, get interpretations streamed by Claude, and build a history of readings across spreads.</p>
+            <div class="proj-foot">
+              <a href="https://tarot.darvinyi.com" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com →</a>
+              <a href="https://github.com/yidarvin/darvinyi-tarot" target="_blank" rel="noopener noreferrer">github</a>
             </div>
           </article>
 
@@ -457,7 +487,7 @@
           <div class="about-side">
             <a href="https://www.linkedin.com/in/darvinyi/" class="pill" target="_blank" rel="noopener noreferrer">linkedin</a>
             <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">scholar</a>
-            <a href="/cdn-cgi/l/email-protection#751d1c35111407031c1b0c1c5b161a18" class="pill accent">say hi</a>
+            <a href="mailto:yidarvin@gmail.com" class="pill accent">say hi</a>
           </div>
         </div>
       </div>
