@@ -8,56 +8,53 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== TOKENS ===== */
+    /* ===== TOKENS — dark, cyan accent ===== */
     :root {
-      --bg:           #fbfaf7;
-      --bg-2:         #f4f1ea;
-      --ink:          #161412;
-      --ink-2:        #4a463f;
-      --ink-3:        #8a8478;
-      --ink-4:        #b8b1a3;
-      --rule:         rgba(22, 20, 18, 0.10);
-      --rule-2:       rgba(22, 20, 18, 0.20);
-      --accent:       oklch(0.62 0.16 195);          /* cyan */
-      --accent-soft:  oklch(0.62 0.16 195 / 0.10);
-      --serif:        'DM Serif Display', 'Times New Roman', serif;
-      --sans:         'Space Grotesk', system-ui, sans-serif;
-      --mono:         'JetBrains Mono', ui-monospace, monospace;
-    }
+      color-scheme: dark;
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg:         #0f0e0c;
-        --bg-2:       #181612;
-        --ink:        #f0ede6;
-        --ink-2:      #a8a397;
-        --ink-3:      #6b665c;
-        --ink-4:      #4a463e;
-        --rule:       rgba(240, 237, 230, 0.08);
-        --rule-2:     rgba(240, 237, 230, 0.18);
-        --accent:     oklch(0.72 0.16 195);
-        --accent-soft: oklch(0.72 0.16 195 / 0.12);
-      }
+      --bg:         #0a0a0c;
+      --bg-2:       #131318;
+      --bg-3:       #191920;
+      --ink:        #e8e8ea;
+      --ink-2:      #9a9aa3;
+      --ink-3:      #62626c;
+      --ink-4:      #3a3a44;
+
+      --rule:       rgba(255, 255, 255, 0.06);
+      --rule-2:     rgba(255, 255, 255, 0.12);
+      --rule-3:     rgba(255, 255, 255, 0.20);
+
+      --accent:     oklch(0.80 0.13 200);
+      --accent-d:   oklch(0.66 0.13 200);
+      --accent-soft: oklch(0.80 0.13 200 / 0.12);
+
+      --mono:       'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans:       'IBM Plex Sans', system-ui, sans-serif;
+
+      --maxw:       780px;
     }
 
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: var(--sans);
-      font-size: 15px;
+      font-family: var(--mono);
+      font-size: 14px;
       line-height: 1.65;
       color: var(--ink);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
     a { color: inherit; }
-    img { display: block; max-width: 100%; }
+    img, svg { display: block; max-width: 100%; }
     ul { list-style: none; }
     h1, h2, h3, h4, p { margin: 0; }
+
+    ::selection { background: var(--accent-soft); color: var(--ink); }
 
     :focus-visible {
       outline: 1.5px solid var(--accent);
@@ -65,137 +62,684 @@
       border-radius: 2px;
     }
 
-    .wrap { max-width: 720px; margin: 0 auto; padding: 0 40px; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
 
     /* ===== NAV ===== */
     nav {
       position: sticky; top: 0; z-index: 5;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(8px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-bottom: 0.5px solid var(--rule);
     }
     .nav-inner {
-      max-width: 720px; margin: 0 auto; padding: 0 40px; height: 56px;
+      max-width: var(--maxw); margin: 0 auto; padding: 0 32px; height: 52px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-decoration: none; color: var(--ink); }
-    .logo b { color: var(--accent); font-weight: 400; }
-    .nav-links { display: flex; gap: 28px; }
-    .nav-links a { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); text-decoration: none; letter-spacing: 0.04em; transition: color .15s; }
+    .logo {
+      font-family: var(--mono);
+      font-size: 12.5px; font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none; color: var(--ink);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .logo .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+    .nav-links { display: flex; gap: 22px; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 12px; font-weight: 400;
+      color: var(--ink-2); text-decoration: none;
+      transition: color .15s;
+    }
     .nav-links a:hover { color: var(--accent); }
 
     /* ===== SECTIONS ===== */
-    section { padding: 72px 0; border-top: 0.5px solid var(--rule); }
-    #hero { padding: 88px 0 72px; border-top: none; }
+    section { padding: 80px 0; border-top: 0.5px solid var(--rule); }
+    #hero { padding: 96px 0 80px; border-top: none; }
 
-    .section-label { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
-    .section-label span { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
-    .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--rule); }
+    .section-label {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 40px;
+      font-family: var(--mono);
+      font-size: 11px; letter-spacing: 0.04em;
+      color: var(--ink-3);
+    }
+    .section-label > span:not(.line) { flex-shrink: 0; white-space: nowrap; }
+    .section-label .hash { color: var(--accent); }
+    .section-label .line { flex: 1; height: 0.5px; background: var(--rule); min-width: 12px; }
 
     /* ===== HERO ===== */
-    .hero-grid { display: grid; grid-template-columns: 1fr 140px; gap: 48px; align-items: start; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 132px;
+      gap: 48px;
+      align-items: start;
+    }
     .eyebrow {
-      font-family: var(--mono); font-size: 11px; color: var(--ink-3);
-      letter-spacing: 0.06em; margin-bottom: 22px;
+      font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+      margin-bottom: 26px;
       display: flex; align-items: center; gap: 10px;
     }
-    .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
-    h1.hero {
-      font-family: var(--serif);
-      font-size: clamp(42px, 5.6vw, 56px);
-      line-height: 1.04;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 24px;
-      text-wrap: pretty;
+    .eyebrow .blink {
+      width: 7px; height: 7px; border-radius: 1px;
+      background: var(--accent);
+      animation: blink 1.4s steps(2, end) infinite;
     }
-    h1.hero em { font-style: italic; color: var(--accent); }
-    .hero-bio { font-size: 15px; color: var(--ink-2); line-height: 1.72; margin-bottom: 28px; max-width: 50ch; }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0.15; }
+    }
+    h1.hero {
+      font-family: var(--mono);
+      font-size: clamp(30px, 4.2vw, 42px);
+      line-height: 1.15;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 26px;
+      text-wrap: balance;
+    }
+    h1.hero .line2 { display: block; }
+    h1.hero .accent { color: var(--accent); }
+    h1.hero .glyph { color: var(--ink-3); font-weight: 300; }
+    .hero-bio {
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 54ch;
+      font-weight: 400;
+    }
+    .hero-bio strong { color: var(--ink); font-weight: 500; }
+
     .pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
-      display: inline-flex; align-items: center;
-      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
-      color: var(--ink-2); border: 0.5px solid var(--rule-2);
-      border-radius: 999px; padding: 6px 14px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 11.5px; font-weight: 400;
+      color: var(--ink-2);
+      border: 0.5px solid var(--rule-2);
+      background: transparent;
+      padding: 6px 12px;
+      text-decoration: none;
       transition: background .15s, color .15s, border-color .15s;
     }
-    .pill:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-    .pill.accent { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
-    .pill.accent:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-
-    .hero-right { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-    .avatar { width: 120px; height: 120px; border-radius: 14px; background: var(--bg-2); object-fit: cover; object-position: center top; }
-    .creds { text-align: center; display: flex; flex-direction: column; gap: 4px; }
-    .creds span { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; }
-
-    /* ===== RESEARCH FOCUS ===== */
-    .focus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border: 0.5px solid var(--rule); }
-    .focus-card { background: var(--bg); padding: 24px 22px; }
-    .focus-card .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; display: block; }
-    .focus-card h3 { font-family: var(--serif); font-size: 19px; margin-bottom: 8px; font-weight: 400; }
-    .focus-card p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
-
-    /* ===== PROJECTS ===== */
-    .proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--rule); border: 0.5px solid var(--rule); }
-    .proj { background: var(--bg); padding: 24px; display: flex; flex-direction: column; }
-    .proj .tag {
-      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-3); background: var(--bg-2);
-      display: inline-block; padding: 3px 8px; border-radius: 3px;
-      margin-bottom: 12px; align-self: flex-start;
+    .pill:hover {
+      background: var(--bg-3);
+      color: var(--ink);
+      border-color: var(--rule-3);
     }
-    .proj h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 8px; line-height: 1.2; }
-    .proj p { font-size: 13.5px; color: var(--ink-2); line-height: 1.62; flex: 1; margin-bottom: 18px; }
-    .proj-foot { display: flex; gap: 14px; }
-    .proj-foot a { font-family: var(--mono); font-size: 10.5px; color: var(--ink-2); text-decoration: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 1px; transition: color .15s, border-color .15s; }
-    .proj-foot a:hover { color: var(--accent); border-color: var(--accent); }
+    .pill.accent {
+      color: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+    .pill.accent:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .pill .arrow { color: var(--ink-3); }
+    .pill:hover .arrow { color: inherit; }
 
-    /* ===== PROJECT SUBSECTIONS ===== */
-    .proj-subsection {
-      grid-column: 1 / -1;
-      background: var(--bg-2);
-      padding: 10px 24px;
+    .hero-right { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+    .avatar-frame {
+      position: relative;
+      width: 132px; height: 132px;
+      border: 0.5px solid var(--rule-2);
+      padding: 4px;
+    }
+    .avatar {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      filter: grayscale(0.15) contrast(1.02);
+    }
+    .avatar-frame::before, .avatar-frame::after {
+      content: ''; position: absolute; width: 8px; height: 8px;
+      border: 0.5px solid var(--accent);
+    }
+    .avatar-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .avatar-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+    .creds {
+      display: flex; flex-direction: column; gap: 3px;
+      padding-top: 4px;
+    }
+    .creds span {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--ink-3); letter-spacing: 0;
+    }
+    .creds span b { color: var(--ink-2); font-weight: 400; }
+
+    /* ===== EXPERIENCE — Gantt-style timeline ===== */
+    .tl { position: relative; }
+    .tl-axis {
+      position: relative;
+      height: 26px;
+      margin-bottom: 12px;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .tl-axis span {
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-3);
+      letter-spacing: 0.04em;
+      padding-bottom: 6px;
+    }
+    .tl-axis span::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -3px;
+      width: 1px; height: 5px;
+      background: var(--rule-2);
+    }
+    .tl-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tl-row {
+      position: relative;
+      height: 44px;
+    }
+    /* Faint vertical gridlines aligned to year labels */
+    .tl-rows::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      background-image:
+        linear-gradient(90deg, var(--rule) 0.5px, transparent 0.5px);
+      background-size: 15.38% 100%;
+      background-position: 0 0;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .tl-bar {
+      position: absolute;
+      top: 4px;
+      left: var(--start);
+      width: var(--width);
+      height: 22px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      border: 0.5px solid color-mix(in srgb, var(--accent) 42%, transparent);
       display: flex;
       align-items: center;
-      gap: 12px;
+      padding: 0 9px;
+      overflow: hidden;
+      transition: background .2s, border-color .2s, box-shadow .2s;
+      z-index: 1;
     }
-    .proj-subsection span {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--ink-3);
+    .tl-bar:hover {
+      background: color-mix(in srgb, var(--accent) 24%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 65%, transparent);
     }
-    .proj-subsection::after { content: ''; flex: 1; height: 0.5px; background: var(--rule-2); }
+    .tl-bar .tl-org {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .tl-bar.edu {
+      background: transparent;
+      border-style: dashed;
+      border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+    .tl-bar.current {
+      background: color-mix(in srgb, var(--accent) 32%, transparent);
+      border-color: var(--accent);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+    .tl-bar.current::after {
+      content: '▸';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-size: 12px;
+      animation: tl-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes tl-pulse {
+      0%, 100% { opacity: 1; transform: translate(0, -50%); }
+      50% { opacity: 0.35; transform: translate(4px, -50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tl-bar.current::after { animation: none; }
+    }
+    .tl-caption {
+      position: absolute;
+      top: 27px;
+      left: var(--start);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-3);
+      letter-spacing: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      max-width: calc(100% - var(--start));
+    }
+    .tl-caption .role { color: var(--ink-2); }
+    .tl-caption .sep { color: var(--ink-4); margin: 0 6px; }
+
+    /* Legend */
+    .tl-legend {
+      display: flex; flex-wrap: wrap; gap: 18px;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 0.5px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-3);
+      letter-spacing: 0.04em;
+    }
+    .tl-legend-item { display: inline-flex; align-items: center; gap: 7px; }
+    .tl-legend-item .sw {
+      width: 18px; height: 8px;
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      border: 0.5px solid color-mix(in srgb, var(--accent) 42%, transparent);
+    }
+    .tl-legend-item .sw.edu { background: transparent; border-style: dashed; }
+    .tl-legend-item .sw.current {
+      background: color-mix(in srgb, var(--accent) 32%, transparent);
+      border-color: var(--accent);
+    }
+
+    /* ===== RESEARCH FOCUS ===== */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border: 0.5px solid var(--rule);
+    }
+    .focus-card {
+      background: var(--bg);
+      padding: 24px;
+      border-right: 0.5px solid var(--rule);
+      border-bottom: 0.5px solid var(--rule);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .focus-card:nth-child(2n) { border-right: none; }
+    .focus-card:nth-last-child(-n+2) { border-bottom: none; }
+
+    .focus-card .n {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .focus-card .n::after {
+      content: ''; flex: 1; height: 0.5px;
+      background: color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+    .focus-card h3 {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .focus-card .desc {
+      font-family: var(--sans);
+      font-size: 13.5px;
+      color: var(--ink-2);
+      line-height: 1.65;
+    }
+    .focus-meta {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 4px;
+    }
+    .focus-meta .row {
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .focus-meta .label {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--ink-3);
+      letter-spacing: 0;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+    .focus-topics {
+      display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .focus-topics span {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--ink-2);
+      padding: 2px 7px;
+      border: 0.5px solid var(--rule-2);
+    }
+    .focus-works {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .focus-works a {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color .15s;
+      line-height: 1.45;
+    }
+    .focus-works a::before {
+      content: '→ '; color: var(--ink-4);
+    }
+    .focus-works a:hover { color: var(--accent); }
+    .focus-works a:hover::before { color: var(--accent); }
+
+    /* ===== PROJECTS — editorial layout with cyan rail ===== */
+    .proj-section {
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 48px;
+    }
+    .proj-section:last-child { margin-bottom: 0; }
+    /* The cyan rail */
+    .proj-section::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 4px; bottom: 4px;
+      width: 1px;
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--accent) 45%, transparent) 0%,
+        color-mix(in srgb, var(--accent) 25%, transparent) 100%
+      );
+    }
+
+    .proj-section-title {
+      position: relative;
+      display: inline-flex; align-items: baseline; gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 24px;
+      padding-right: 12px;
+      background: var(--bg);
+    }
+    .proj-section-title::before {
+      content: '';
+      position: absolute;
+      left: -41px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 9px; height: 9px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 4px var(--bg),
+        0 0 16px color-mix(in srgb, var(--accent) 70%, transparent);
+    }
+    .proj-section-title .num {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    .proj-section-title .count {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--ink-3);
+      letter-spacing: 0.06em;
+      text-transform: none;
+    }
+
+    .proj-grid {
+      display: flex;
+      flex-direction: column;
+    }
+    .proj {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+      padding: 28px 0;
+      border-bottom: 0.5px solid var(--rule);
+      transition: opacity .2s;
+    }
+    .proj:first-child { padding-top: 0; }
+    .proj:last-child { border-bottom: none; padding-bottom: 0; }
+    .proj:nth-child(even) .thumb { order: 2; }
+
+    .thumb {
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-2);
+      border: 0.5px solid var(--rule);
+      transition: border-color .2s;
+    }
+    .proj:hover .thumb { border-color: var(--rule-3); }
+    .proj:hover .thumb-overlay { opacity: 1; }
+    .proj:hover .proj-link.primary { color: var(--accent); }
+    .proj:hover .proj-link.primary .arrow { transform: translateX(2px); }
+    .thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+    }
+    .thumb-placeholder {
+      width: 100%; height: 100%;
+      position: relative;
+      background:
+        repeating-linear-gradient(
+          135deg,
+          transparent 0,
+          transparent 6px,
+          rgba(255,255,255,0.025) 6px,
+          rgba(255,255,255,0.025) 7px
+        ),
+        var(--bg-2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .thumb-placeholder .ph-label {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--ink-3);
+      letter-spacing: 0;
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 10px;
+      background: var(--bg);
+      border: 0.5px solid var(--rule-2);
+    }
+    .thumb-placeholder .ph-label::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--accent); opacity: 0.6;
+    }
+    .thumb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.4) 100%);
+      opacity: 0;
+      transition: opacity .25s;
+      pointer-events: none;
+    }
+
+    .proj-body {
+      padding: 0;
+      display: flex; flex-direction: column;
+    }
+    .proj .tag {
+      font-family: var(--mono); font-size: 9.5px;
+      color: var(--ink-3);
+      margin-bottom: 10px;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .proj .tag .dot {
+      width: 4px; height: 4px; background: var(--ink-4);
+    }
+    .proj h3 {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .proj p {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink-2);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .proj-foot {
+      display: flex; gap: 18px; align-items: center;
+      padding-top: 4px;
+    }
+    .proj-link {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color .15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .proj-link .arrow { transition: transform .15s; color: var(--ink-3); }
+    .proj-link.gh { color: var(--ink-3); white-space: nowrap; }
+    .proj-link.primary { white-space: nowrap; }
+    .proj-link:hover { color: var(--accent); }
+    .proj-link:hover .arrow { color: var(--accent); transform: translateX(2px); }
 
     /* ===== PUBLICATIONS ===== */
-    .pubs { display: flex; flex-direction: column; }
-    .pub { display: grid; grid-template-columns: 1fr auto; gap: 24px; padding: 22px 0; border-bottom: 0.5px solid var(--rule); align-items: start; }
-    .pub:first-child { border-top: 0.5px solid var(--rule); }
-    .pub .v { font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--ink-3); margin-bottom: 6px; }
-    .pub h4 { font-size: 14.5px; font-weight: 500; margin-bottom: 6px; line-height: 1.45; }
-    .pub h4 a { text-decoration: none; }
-    .pub h4 a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 0.5px; }
-    .pub .auth { font-size: 12.5px; color: var(--ink-2); }
-    .pub .auth strong { color: var(--ink); font-weight: 500; }
-    .pub .badge {
-      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em;
-      color: var(--ink-3); border: 0.5px solid var(--rule);
-      padding: 4px 9px; border-radius: 3px;
-      height: fit-content; white-space: nowrap; margin-top: 2px;
+    .pubs {
+      display: flex; flex-direction: column;
+      gap: 0;
+      border-top: 0.5px solid var(--rule);
     }
-    .pub .badge.hot { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); background: var(--accent-soft); }
-    .pub-foot { margin-top: 24px; }
-    .pub-foot a { font-family: var(--mono); font-size: 11px; color: var(--ink-2); text-decoration: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 1px; transition: color .15s, border-color .15s; }
-    .pub-foot a:hover { color: var(--accent); border-color: var(--accent); }
+    .pub {
+      display: grid;
+      grid-template-columns: 132px 1fr auto;
+      gap: 22px;
+      padding: 22px 0;
+      border-bottom: 0.5px solid var(--rule);
+      align-items: start;
+    }
+    .pub-fig {
+      width: 132px;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-2);
+      border: 0.5px solid var(--rule);
+      position: relative;
+      overflow: hidden;
+    }
+    .pub-fig img { width: 100%; height: 100%; object-fit: cover; }
+    .pub-fig.placeholder {
+      background:
+        repeating-linear-gradient(
+          135deg,
+          transparent 0,
+          transparent 5px,
+          rgba(255,255,255,0.025) 5px,
+          rgba(255,255,255,0.025) 6px
+        ),
+        var(--bg-2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pub-fig.placeholder span {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--ink-3);
+      padding: 3px 7px;
+      background: var(--bg);
+      border: 0.5px solid var(--rule-2);
+    }
+    .pub-body { min-width: 0; }
+    .pub .v {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--ink-3);
+      margin-bottom: 8px;
+    }
+    .pub .v .accent { color: var(--accent); }
+    .pub h4 {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .pub h4 a { text-decoration: none; transition: color .15s; }
+    .pub h4 a:hover { color: var(--accent); }
+    .pub .auth {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-3);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .pub .auth strong { color: var(--ink-2); font-weight: 500; }
+    .pub .summ {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+    .pub .badge {
+      font-family: var(--mono); font-size: 9.5px;
+      color: var(--ink-3);
+      border: 0.5px solid var(--rule-2);
+      padding: 3px 8px;
+      height: fit-content;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .pub .badge.hot {
+      color: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      background: var(--accent-soft);
+    }
+    .pub-foot {
+      margin-top: 28px;
+      display: flex; gap: 14px; align-items: center;
+    }
+    .pub-foot a {
+      font-family: var(--mono); font-size: 11.5px;
+      color: var(--ink-2);
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: color .15s;
+    }
+    .pub-foot a:hover { color: var(--accent); }
+    .pub-foot a::before { content: '→'; color: var(--ink-3); }
+    .pub-foot a:hover::before { color: var(--accent); }
 
     /* ===== ABOUT ===== */
     .about-grid { display: grid; grid-template-columns: 1fr 140px; gap: 48px; align-items: start; }
-    .about p { font-size: 14.5px; color: var(--ink-2); line-height: 1.78; margin-bottom: 16px; }
+    .about p {
+      font-family: var(--sans);
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.78;
+      margin-bottom: 18px;
+    }
     .about p:last-child { margin-bottom: 0; }
-    .about-side { display: flex; flex-direction: column; gap: 8px; }
+    .about p strong { color: var(--ink); font-weight: 500; }
+    .about-side { display: flex; flex-direction: column; gap: 6px; }
+    .about-side .pill { justify-content: space-between; }
 
     /* ===== FOOTER ===== */
-    footer { border-top: 0.5px solid var(--rule); padding: 32px 0; }
-    .footer-inner { max-width: 720px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; }
-    .footer-inner span, .footer-inner a { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; text-decoration: none; transition: color .15s; }
+    footer {
+      border-top: 0.5px solid var(--rule);
+      padding: 28px 0;
+    }
+    .footer-inner {
+      max-width: var(--maxw); margin: 0 auto; padding: 0 32px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-inner span, .footer-inner a {
+      font-family: var(--mono); font-size: 10.5px;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color .15s;
+    }
     .footer-inner a:hover { color: var(--accent); }
 
     /* ===== SCROLL REVEAL ===== */
@@ -204,21 +748,61 @@
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
+      .eyebrow .blink { animation: none; }
     }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 680px) {
+    @media (max-width: 720px) {
       .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 32px; }
-      .hero-right { flex-direction: row; justify-content: flex-start; gap: 16px; }
-      .creds { text-align: left; }
-      .focus-grid, .proj-grid { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+      .hero-right { flex-direction: row; align-items: center; gap: 16px; }
+      .creds { padding-top: 0; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-card { border-right: none !important; }
+      .focus-card:nth-last-child(2) { border-bottom: 0.5px solid var(--rule); }
+      .proj-grid { grid-template-columns: 1fr; gap: 18px; }
+      .proj-section { padding-left: 28px; }
+      .proj-section-title::before { left: -32px; }
+      .proj { grid-template-columns: 1fr; gap: 16px; padding: 22px 0; }
+      .proj:nth-child(even) .thumb { order: 0; }
+      .pub { grid-template-columns: 100px 1fr; }
+      .pub-fig { width: 100px; }
+      .pub .badge { grid-column: 2; align-self: flex-start; margin-top: 4px; }
+      .footer-inner { flex-direction: column; gap: 8px; }
+      /* Timeline shrinks but stays as Gantt */
+      .tl-row { height: 40px; }
+      .tl-bar { height: 18px; padding: 0 6px; }
+      .tl-bar .tl-org { font-size: 10px; }
+      .tl-caption { font-size: 9.5px; top: 22px; }
+      .tl-axis span { font-size: 9.5px; }
     }
 
     @media (max-width: 480px) {
+      /* Collapse timeline to a stacked list on phones */
+      .tl-axis { display: none; }
+      .tl-rows::before { display: none; }
+      .tl-rows { gap: 14px; }
+      .tl-row { height: auto; min-height: 38px; }
+      .tl-bar {
+        position: relative;
+        left: 0 !important; width: 100% !important;
+        top: 0; height: 22px;
+      }
+      .tl-bar.current::after { display: none; }
+      .tl-caption {
+        position: relative;
+        top: 0; left: 0 !important;
+        margin-top: 4px;
+        white-space: normal;
+      }
+      .tl-legend { gap: 12px; }
       .nav-links { gap: 14px; }
-      .pub { grid-template-columns: 1fr; gap: 8px; }
-      .pub .badge { align-self: flex-start; margin-top: 0; }
+      .nav-links a { font-size: 11px; }
+      .wrap { padding: 0 22px; }
+      .nav-inner { padding: 0 22px; }
+      .footer-inner { padding: 0 22px; }
+      section { padding: 64px 0; }
+      .pub { grid-template-columns: 1fr; }
+      .pub-fig { width: 100%; aspect-ratio: 16/9; }
     }
   </style>
 </head>
@@ -226,8 +810,9 @@
 
   <nav aria-label="Primary">
     <div class="nav-inner">
-      <a href="#hero" class="logo">darvinyi<b>.com</b></a>
+      <a href="#hero" class="logo"><span class="dot"></span>darvinyi.com</a>
       <ul class="nav-links" role="list">
+        <li><a href="#experience">experience</a></li>
         <li><a href="#research">research</a></li>
         <li><a href="#projects">projects</a></li>
         <li><a href="#publications">publications</a></li>
@@ -239,265 +824,510 @@
   <main>
 
     <!-- HERO -->
-    <section id="hero" class="reveal" aria-label="Introduction">
+    <section id="hero" class="reveal" aria-label="Introduction" data-screen-label="Hero">
       <div class="wrap">
         <div class="hero-grid">
           <div>
-            <p class="eyebrow">director of machine learning, upwork · palo alto, ca</p>
-            <h1 class="hero">Measuring AI, in the <em>real world</em>.</h1>
-            <p class="hero-bio">I'm a machine learning researcher and engineer working on the datasets, benchmarks, and evaluation methods that show whether AI systems actually hold up outside the lab. Currently leading ML at Upwork on agentic evaluation. Previously Stanford, UIC, Cruise, Magic Leap — across medical imaging, computer vision, and autonomous systems.</p>
+            <p class="eyebrow"><span class="blink"></span>director of machine learning · upwork · palo alto</p>
+            <h1 class="hero">Measuring AI,<span class="line2"><span class="glyph">/&#42;</span> in the <span class="accent">real world</span> <span class="glyph">&#42;/</span></span></h1>
+            <p class="hero-bio">ML researcher and engineer working on the <strong>datasets, benchmarks, and evaluation methods</strong> that show whether AI systems actually hold up outside the lab. Currently leading ML at Upwork on agentic evaluation. Previously Stanford, UIC, Cruise, Magic Leap — across medical imaging, computer vision, and autonomous systems.</p>
             <div class="pills">
-              <a href="https://www.linkedin.com/in/darvinyi/" class="pill accent" target="_blank" rel="noopener noreferrer">linkedin</a>
-              <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">google scholar</a>
-              <a href="https://research.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">research</a>
-              <a href="https://photos.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">photography</a>
-              <a href="https://www.instagram.com/darvinistrying/" class="pill" target="_blank" rel="noopener noreferrer">instagram</a>
+              <a href="https://www.linkedin.com/in/darvinyi/" class="pill accent" target="_blank" rel="noopener noreferrer">linkedin <span class="arrow">↗</span></a>
+              <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">scholar <span class="arrow">↗</span></a>
+              <a href="https://research.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">research <span class="arrow">↗</span></a>
+              <a href="https://photos.darvinyi.com" class="pill" target="_blank" rel="noopener noreferrer">photography <span class="arrow">↗</span></a>
+              <a href="/cdn-cgi/l/email-protection#453c2c212437332c2b052228242c296b262a28" class="pill">email <span class="arrow">↗</span></a>
             </div>
           </div>
           <div class="hero-right">
-            <img src="avatar.jpg" alt="Darvin Yi" class="avatar">
-            <div class="creds">
-              <span>palo alto, ca</span>
-              <span>stanford phd · princeton bs</span>
+            <div class="avatar-frame">
+              <img src="avatar.jpg" alt="Darvin Yi" class="avatar">
             </div>
+            <div class="creds">
+              <span><b>loc</b> · palo alto, ca</span>
+              <span><b>edu</b> · stanford phd</span>
+              <span><b>edu</b> · princeton bs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="reveal" aria-label="Experience" data-screen-label="Experience">
+      <div class="wrap">
+        <div class="section-label">
+          <span><span class="hash">#</span> experience</span>
+          <span class="line"></span>
+          <span style="font-family: var(--mono); font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em;">2014 → now</span>
+        </div>
+        <div class="tl">
+          <div class="tl-axis">
+            <span style="left: 0%;">2014</span>
+            <span style="left: 15.38%;">2016</span>
+            <span style="left: 30.77%;">2018</span>
+            <span style="left: 46.15%;">2020</span>
+            <span style="left: 61.54%;">2022</span>
+            <span style="left: 76.92%;">2024</span>
+            <span style="left: 92.31%;">2026</span>
+          </div>
+          <div class="tl-rows">
+
+            <div class="tl-row">
+              <div class="tl-bar edu" style="--start: 5.13%; --width: 44.23%;">
+                <span class="tl-org">Stanford</span>
+              </div>
+              <div class="tl-caption" style="--start: 5.13%;">
+                <span class="role">PhD, Biomedical Informatics</span><span class="sep">·</span>2014—2020
+              </div>
+            </div>
+
+            <div class="tl-row">
+              <div class="tl-bar" style="--start: 33.97%; --width: 15.38%;">
+                <span class="tl-org">Magic Leap</span>
+              </div>
+              <div class="tl-caption" style="--start: 33.97%;">
+                <span class="role">Senior DL Scientist</span><span class="sep">·</span>2018—2020
+              </div>
+            </div>
+
+            <div class="tl-row">
+              <div class="tl-bar edu" style="--start: 50.00%; --width: 38.46%;">
+                <span class="tl-org">UIC</span>
+              </div>
+              <div class="tl-caption" style="--start: 50.00%;">
+                <span class="role">Exec Director · AI in Ophthalmology</span><span class="sep">·</span>2020—2025
+              </div>
+            </div>
+
+            <div class="tl-row">
+              <div class="tl-bar" style="--start: 52.56%; --width: 19.87%;">
+                <span class="tl-org">Sirona Medical</span>
+              </div>
+              <div class="tl-caption" style="--start: 52.56%;">
+                <span class="role">Principal CV Scientist · Tech Lead Manager</span><span class="sep">·</span>2020—2023
+              </div>
+            </div>
+
+            <div class="tl-row">
+              <div class="tl-bar" style="--start: 72.44%; --width: 1.92%;" title="Cruise · Staff Research Scientist · Jun—Sep 2023"></div>
+              <div class="tl-caption" style="--start: 72.44%;">
+                <span class="role">Cruise · Staff Research Scientist</span><span class="sep">·</span>Jun—Sep 2023
+              </div>
+            </div>
+
+            <div class="tl-row">
+              <div class="tl-bar current" style="--start: 85.26%; --width: 9.62%;">
+                <span class="tl-org">Upwork</span>
+              </div>
+              <div class="tl-caption" style="--start: 85.26%;">
+                <span class="role">Director of ML</span><span class="sep">·</span>2025—now
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tl-legend">
+            <span class="tl-legend-item"><span class="sw"></span>industry</span>
+            <span class="tl-legend-item"><span class="sw edu"></span>academia / education</span>
+            <span class="tl-legend-item"><span class="sw current"></span>current</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- RESEARCH FOCUS -->
-    <section id="research" class="reveal" aria-label="Research focus">
+    <section id="research" class="reveal" aria-label="Research focus" data-screen-label="Research focus">
       <div class="wrap">
-        <div class="section-label"><span>research focus</span></div>
+        <div class="section-label">
+          <span><span class="hash">#</span> research_focus</span>
+          <span class="line"></span>
+        </div>
         <div class="focus-grid" role="list">
+
           <div class="focus-card" role="listitem">
-            <span class="n">01</span>
-            <h3>Benchmarks and Evaluations</h3>
-            <p>Designing dynamic, real-world benchmarks and evaluation methods that reveal how AI systems truly perform outside the lab.</p>
+            <span class="n">01 / 04</span>
+            <h3>Benchmarks &amp; Evaluations</h3>
+            <p class="desc">Designing dynamic, real-world benchmarks and evaluation methods that reveal how AI systems truly perform outside the lab.</p>
+            <div class="focus-meta">
+              <div class="row">
+                <span class="label">topics</span>
+                <div class="focus-topics">
+                  <span>agentic evals</span>
+                  <span>dynamic benchmarks</span>
+                  <span>eval protocols</span>
+                </div>
+              </div>
+              <div class="row">
+                <span class="label">key&nbsp;work</span>
+                <div class="focus-works">
+                  <a href="https://arxiv.org/abs/2511.12306" target="_blank" rel="noopener noreferrer">UpBench: real-world labor-market agentic benchmark (2025)</a>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="focus-card" role="listitem">
-            <span class="n">02</span>
+            <span class="n">02 / 04</span>
             <h3>Computer Vision</h3>
-            <p>Medical imaging, segmentation, object detection, and depth estimation across clinical, autonomous, and augmented reality systems.</p>
+            <p class="desc">Medical imaging, segmentation, object detection, and depth estimation across clinical, autonomous, and augmented reality systems.</p>
+            <div class="focus-meta">
+              <div class="row">
+                <span class="label">topics</span>
+                <div class="focus-topics">
+                  <span>segmentation</span>
+                  <span>medical imaging</span>
+                  <span>depth</span>
+                  <span>detection</span>
+                </div>
+              </div>
+              <div class="row">
+                <span class="label">key&nbsp;work</span>
+                <div class="focus-works">
+                  <a href="https://www.nature.com/articles/s41597-020-00715-8" target="_blank" rel="noopener noreferrer">CT-ORG: multi-organ CT segmentation dataset</a>
+                  <a href="https://arxiv.org/abs/1903.07988" target="_blank" rel="noopener noreferrer">Brain metastases auto-detection on MRI</a>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="focus-card" role="listitem">
-            <span class="n">03</span>
-            <h3>AIML Foundations</h3>
-            <p>Core methods in deep learning, statistical learning, and representation that underpin modern AI systems and frontier research.</p>
+            <span class="n">03 / 04</span>
+            <h3>AI/ML Foundations</h3>
+            <p class="desc">Core methods in deep learning, statistical learning, and representation that underpin modern AI systems and frontier research.</p>
+            <div class="focus-meta">
+              <div class="row">
+                <span class="label">topics</span>
+                <div class="focus-topics">
+                  <span>deep learning</span>
+                  <span>federated</span>
+                  <span>representation</span>
+                </div>
+              </div>
+              <div class="row">
+                <span class="label">key&nbsp;work</span>
+                <div class="focus-works">
+                  <a href="https://academic.oup.com/jamia/article/25/8/945/4956468" target="_blank" rel="noopener noreferrer">Distributed deep learning without sharing patient data</a>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="focus-card" role="listitem">
-            <span class="n">04</span>
+            <span class="n">04 / 04</span>
             <h3>Productionalizing Research</h3>
-            <p>Translating frontier methods into shipped systems, with measurement and reliability built in at every step.</p>
+            <p class="desc">Translating frontier methods into shipped systems, with measurement and reliability built in at every step.</p>
+            <div class="focus-meta">
+              <div class="row">
+                <span class="label">topics</span>
+                <div class="focus-topics">
+                  <span>deployment</span>
+                  <span>reliability</span>
+                  <span>human + AI</span>
+                </div>
+              </div>
+              <div class="row">
+                <span class="label">key&nbsp;work</span>
+                <div class="focus-works">
+                  <a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2761795" target="_blank" rel="noopener noreferrer">AI + radiologist mammography evaluation (JAMA)</a>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="reveal" aria-label="Projects">
+    <section id="projects" class="reveal" aria-label="Projects" data-screen-label="Projects">
       <div class="wrap">
-        <div class="section-label"><span>selected projects</span></div>
-        <div class="proj-grid">
+        <div class="section-label">
+          <span><span class="hash">#</span> selected_projects</span>
+          <span class="line"></span>
+        </div>
 
-          <div class="proj-subsection"><span>Research Focused</span></div>
-
-          <article class="proj">
-            <span class="tag">tool · ai research</span>
-            <h3>Bench Intel</h3>
-            <p>A benchmark intelligence platform for tracking AI model performance. Compare models, explore correlations across evals, and verify third-party benchmark results.</p>
-            <div class="proj-foot">
-              <a href="https://benchmarks.darvinyi.com" target="_blank" rel="noopener noreferrer">benchmarks.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-benchmark-analysis" target="_blank" rel="noopener noreferrer">github</a>
+        <!-- Research Focused -->
+        <div class="proj-section">
+          <h3 class="proj-section-title"><span class="num">01</span><span>research / tools</span><span class="count">· 3 projects</span></h3>
+          <div class="proj-grid">
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/bench-intel.png" alt="Bench Intel">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>tool · ai research</div>
+                <h3>Bench Intel</h3>
+                <p>A benchmark intelligence platform for tracking AI model performance. Compare models, explore correlations across evals, and verify third-party benchmark results.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://benchmarks.darvinyi.com" target="_blank" rel="noopener noreferrer">benchmarks.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-benchmark-analysis" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">tool · research</span>
-            <h3>Research Topic Explorer</h3>
-            <p>Search any research area and get an interactive citation graph. Expand nodes, filter by year or citation count, and map a field visually.</p>
-            <div class="proj-foot">
-              <a href="https://research-topic.darvinyi.com" target="_blank" rel="noopener noreferrer">research-topic.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-research-topic" target="_blank" rel="noopener noreferrer">github</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/research-topic.png" alt="Research Topic Explorer">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>tool · research</div>
+                <h3>Research Topic Explorer</h3>
+                <p>Search any research area and get an interactive citation graph. Expand nodes, filter by year or citation count, and map a field visually.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://research-topic.darvinyi.com" target="_blank" rel="noopener noreferrer">research-topic.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-research-topic" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">book · ai &amp; ml</span>
-            <h3>ML Textbook</h3>
-            <p>A 17-chapter interactive web textbook on machine learning — from statistical foundations to AI agents, with embedded visualizations you can explore hands-on.</p>
-            <div class="proj-foot">
-              <a href="https://textbook.darvinyi.com" target="_blank" rel="noopener noreferrer">textbook.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-textbook" target="_blank" rel="noopener noreferrer">github</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/textbook.png" alt="ML Textbook">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>book · ai &amp; ml</div>
+                <h3>ML Textbook</h3>
+                <p>A 17-chapter interactive web textbook on machine learning — from statistical foundations to AI agents, with embedded visualizations you can explore hands-on.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://textbook.darvinyi.com" target="_blank" rel="noopener noreferrer">textbook.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-textbook" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
+          </div>
+        </div>
 
-          <div class="proj-subsection"><span>Photography</span></div>
-
-          <article class="proj">
-            <span class="tag">site · photography</span>
-            <h3>Photography</h3>
-            <p>A small portfolio of photo albums. Browse collections in a masonry grid and view full-size in an interactive lightbox.</p>
-            <div class="proj-foot">
-              <a href="https://photos.darvinyi.com" target="_blank" rel="noopener noreferrer">photos.darvinyi.com →</a>
+        <!-- Photography -->
+        <div class="proj-section">
+          <h3 class="proj-section-title"><span class="num">02</span><span>photography</span><span class="count">· 4 projects</span></h3>
+          <div class="proj-grid">
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/photos.png" alt="Photography">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>site · photography</div>
+                <h3>Photography</h3>
+                <p>A small portfolio of photo albums. Browse collections in a masonry grid and view full-size in an interactive lightbox.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://photos.darvinyi.com" target="_blank" rel="noopener noreferrer">photos.darvinyi.com <span class="arrow">→</span></a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">site · photography</span>
-            <h3>Raw Photos</h3>
-            <p>Unedited, straight-from-camera shots. A less curated window into what I'm pointing a lens at.</p>
-            <div class="proj-foot">
-              <a href="https://raw.darvinyi.com" target="_blank" rel="noopener noreferrer">raw.darvinyi.com →</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/raw.png" alt="Raw Photos">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>site · photography</div>
+                <h3>Raw Photos</h3>
+                <p>Unedited, straight-from-camera shots. A less curated window into what I'm pointing a lens at.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://raw.darvinyi.com" target="_blank" rel="noopener noreferrer">raw.darvinyi.com <span class="arrow">→</span></a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">site · personal</span>
-            <h3>Family Slideshow</h3>
-            <p>A running slideshow of family photos. Built to share moments with the people who matter most.</p>
-            <div class="proj-foot">
-              <a href="https://slideshow.darvinyi.com" target="_blank" rel="noopener noreferrer">slideshow.darvinyi.com →</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/slideshow.png" alt="Family Slideshow">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>site · personal</div>
+                <h3>Family Slideshow</h3>
+                <p>A running slideshow of family photos. Built to share moments with the people who matter most.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://slideshow.darvinyi.com" target="_blank" rel="noopener noreferrer">slideshow.darvinyi.com <span class="arrow">→</span></a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">site · family</span>
-            <h3>Family Photos</h3>
-            <p>A private collection of raw, unfiltered family photos — a running archive of everyday moments shared with family.</p>
-            <div class="proj-foot">
-              <a href="https://family.darvinyi.com" target="_blank" rel="noopener noreferrer">family.darvinyi.com →</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/family.png" alt="Family Photos">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>site · family</div>
+                <h3>Family Photos</h3>
+                <p>A private collection of raw, unfiltered family photos — a running archive of everyday moments shared with family.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://family.darvinyi.com" target="_blank" rel="noopener noreferrer">family.darvinyi.com <span class="arrow">→</span></a>
+                </div>
+              </div>
             </div>
-          </article>
+          </div>
+        </div>
 
-          <div class="proj-subsection"><span>Web Apps</span></div>
-
-          <article class="proj">
-            <span class="tag">app · psychology</span>
-            <h3>Values Sorter</h3>
-            <p>Sort 107 personal values by importance, track how they shift across sessions, and see what consistently rises to the top.</p>
-            <div class="proj-foot">
-              <a href="https://values.darvinyi.com" target="_blank" rel="noopener noreferrer">values.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-values" target="_blank" rel="noopener noreferrer">github</a>
+        <!-- Web Apps -->
+        <div class="proj-section">
+          <h3 class="proj-section-title"><span class="num">03</span><span>web apps</span><span class="count">· 4 projects</span></h3>
+          <div class="proj-grid">
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/values.png" alt="Values Sorter">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>app · psychology</div>
+                <h3>Values Sorter</h3>
+                <p>Sort 107 personal values by importance, track how they shift across sessions, and see what consistently rises to the top.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://values.darvinyi.com" target="_blank" rel="noopener noreferrer">values.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-values" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">app · social</span>
-            <h3>Chonky Cat Movies</h3>
-            <p>Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch, and track what everyone has seen.</p>
-            <div class="proj-foot">
-              <a href="https://movies.darvinyi.com" target="_blank" rel="noopener noreferrer">movies.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-movies" target="_blank" rel="noopener noreferrer">github</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/movies.png" alt="Chonky Cat Movies">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>app · social</div>
+                <h3>Chonky Cat Movies</h3>
+                <p>Collaborative movie voting for friend groups. Add films to a shared list, vote on what to watch, and track what everyone has seen.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://movies.darvinyi.com" target="_blank" rel="noopener noreferrer">movies.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-movies" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">app · ai</span>
-            <h3>Daily Tarot</h3>
-            <p>AI-powered tarot readings. Draw cards, get interpretations streamed by Claude, and build a history of readings across spreads.</p>
-            <div class="proj-foot">
-              <a href="https://tarot.darvinyi.com" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-tarot" target="_blank" rel="noopener noreferrer">github</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/tarot.png" alt="Daily Tarot">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>app · ai</div>
+                <h3>Daily Tarot</h3>
+                <p>AI-powered tarot readings. Draw cards, get interpretations streamed by Claude, and build a history of readings across spreads.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://tarot.darvinyi.com" target="_blank" rel="noopener noreferrer">tarot.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-tarot" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
 
-          <article class="proj">
-            <span class="tag">app · satire</span>
-            <h3>Calculator 2026</h3>
-            <p>A working calculator buried under every dark pattern in SaaS — paywalls, surge pricing, AI upsells, and a 5-second "thinking" animation for basic arithmetic.</p>
-            <div class="proj-foot">
-              <a href="https://calculator.darvinyi.com" target="_blank" rel="noopener noreferrer">calculator.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-calculator" target="_blank" rel="noopener noreferrer">github</a>
+            <div class="proj">
+              <div class="thumb">
+                <img src="screenshots/projects/calculator.png" alt="Calculator 2026">
+                <div class="thumb-overlay"></div>
+              </div>
+              <div class="proj-body">
+                <div class="tag"><span class="dot"></span>app · satire</div>
+                <h3>Calculator 2026</h3>
+                <p>A working calculator buried under every dark pattern in SaaS — paywalls, surge pricing, AI upsells, and a 5-second "thinking" animation for basic arithmetic.</p>
+                <div class="proj-foot">
+                  <a class="proj-link primary" href="https://calculator.darvinyi.com" target="_blank" rel="noopener noreferrer">calculator.darvinyi.com <span class="arrow">→</span></a>
+                  <a href="https://github.com/yidarvin/darvinyi-calculator" class="proj-link gh" target="_blank" rel="noopener noreferrer">github ↗</a>
+                </div>
+              </div>
             </div>
-          </article>
-
-          <article class="proj">
-            <span class="tag">app · game</span>
-            <h3>Life Simulation</h3>
-            <p>An autoclicker game that simulates a life. Click to earn, unlock upgrades, and watch the numbers tick up as the years go by.</p>
-            <div class="proj-foot">
-              <a href="https://life-simulation.darvinyi.com" target="_blank" rel="noopener noreferrer">life-simulation.darvinyi.com →</a>
-              <a href="https://github.com/yidarvin/darvinyi-life-simulation" target="_blank" rel="noopener noreferrer">github</a>
-            </div>
-          </article>
-
+          </div>
         </div>
       </div>
     </section>
 
     <!-- PUBLICATIONS -->
-    <section id="publications" class="reveal" aria-label="Selected publications">
+    <section id="publications" class="reveal" aria-label="Selected publications" data-screen-label="Publications">
       <div class="wrap">
-        <div class="section-label"><span>selected publications</span></div>
+        <div class="section-label">
+          <span><span class="hash">#</span> selected_publications</span>
+          <span class="line"></span>
+        </div>
         <div class="pubs" role="list">
 
           <div class="pub" role="listitem">
-            <div>
-              <p class="v">agentic ai · upwork · 2025</p>
+            <div class="pub-fig"><img src="screenshots/publications/upbench.png" alt="UpBench benchmark composition"></div>
+            <div class="pub-body">
+              <p class="v"><span class="accent">agentic ai</span> · upwork · 2025</p>
               <h4><a href="https://arxiv.org/abs/2511.12306" target="_blank" rel="noopener noreferrer">UpBench: A Dynamically Evolving Real-World Labor-Market Agentic Benchmark</a></h4>
               <p class="auth"><strong>D. Yi</strong>, T. Liu, M. Terzolo, L. Hasson, A. Sinha, P. Mendes, A. Rabinovich</p>
+              <p class="summ">A live, continuously refreshed benchmark built from real labor-market tasks — measuring how agentic systems perform on the kind of open-ended work people actually pay for.</p>
             </div>
             <span class="badge hot">new · 2025</span>
           </div>
 
           <div class="pub" role="listitem">
-            <div>
-              <p class="v">mammography · jama network open · 2020</p>
+            <div class="pub-fig"><img src="screenshots/publications/mammography.png" alt="Mammography ROC curves"></div>
+            <div class="pub-body">
+              <p class="v"><span class="accent">mammography</span> · jama network open · 2020</p>
               <h4><a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2761795" target="_blank" rel="noopener noreferrer">Evaluation of Combined AI and Radiologist Assessment to Interpret Screening Mammograms</a></h4>
               <p class="auth">T. Schaffter, D. Buist, C.I. Lee, …, <strong>D. Yi</strong>, …, G. Stolovitzky — DM DREAM Consortium</p>
+              <p class="summ">DREAM Challenge study showing that combining radiologists with AI ensembles outperforms either alone — a real-world evaluation of human+AI mammography screening.</p>
             </div>
             <span class="badge">high impact</span>
           </div>
 
           <div class="pub" role="listitem">
-            <div>
-              <p class="v">federated learning · jamia · 2018</p>
+            <div class="pub-fig"><img src="screenshots/publications/federated.png" alt="Distributed deep learning architecture"></div>
+            <div class="pub-body">
+              <p class="v"><span class="accent">federated learning</span> · jamia · 2018</p>
               <h4><a href="https://academic.oup.com/jamia/article/25/8/945/4956468" target="_blank" rel="noopener noreferrer">Distributed Deep Learning Without Sharing Patient Data</a></h4>
               <p class="auth">K. Chang, N. Balachandar, <strong>D. Yi</strong>, et al.</p>
+              <p class="summ">An early federated-learning framework for medical imaging — training across institutions without centralizing patient data. Foundational reference for privacy-preserving clinical ML.</p>
             </div>
             <span class="badge">~500 citations</span>
           </div>
 
           <div class="pub" role="listitem">
-            <div>
-              <p class="v">organ segmentation · nature scientific data · 2020</p>
+            <div class="pub-fig"><img src="screenshots/publications/ct-org.png" alt="CT-ORG organ segmentation"></div>
+            <div class="pub-body">
+              <p class="v"><span class="accent">organ segmentation</span> · nature scientific data · 2020</p>
               <h4><a href="https://www.nature.com/articles/s41597-020-00715-8" target="_blank" rel="noopener noreferrer">CT-ORG: A New Dataset for Multiple Organ Segmentation in Computed Tomography</a></h4>
               <p class="auth">B. Rister, <strong>D. Yi</strong>, K. Shivakumar, T. Nobashi, D.L. Rubin</p>
+              <p class="summ">A public CT dataset with voxel-level annotations across six organs, designed to train and benchmark multi-organ segmentation models.</p>
             </div>
             <span class="badge">public dataset</span>
           </div>
 
           <div class="pub" role="listitem">
-            <div>
-              <p class="v">brain metastases · jmri · stanford aimi · 2019</p>
+            <div class="pub-fig"><img src="screenshots/publications/brain-mets.png" alt="Brain metastases multi-sequence MRI"></div>
+            <div class="pub-body">
+              <p class="v"><span class="accent">brain metastases</span> · jmri · stanford aimi · 2019</p>
               <h4><a href="https://arxiv.org/abs/1903.07988" target="_blank" rel="noopener noreferrer">Deep Learning Enables Automatic Detection and Segmentation of Brain Metastases on Multi-Sequence MRI</a></h4>
               <p class="auth">E. Grøvik, <strong>D. Yi</strong>, M. Iv, E. Tong, D.L. Rubin, G. Zaharchuk</p>
+              <p class="summ">A multi-sequence MRI pipeline that detects and segments brain metastases automatically — released alongside an open dataset for the research community.</p>
             </div>
             <span class="badge">public dataset</span>
           </div>
 
         </div>
         <div class="pub-foot">
-          <a href="https://research.darvinyi.com" target="_blank" rel="noopener noreferrer">all publications → research.darvinyi.com</a>
+          <a href="https://research.darvinyi.com" target="_blank" rel="noopener noreferrer">all publications · research.darvinyi.com</a>
         </div>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="reveal" aria-label="About">
+    <section id="about" class="reveal" aria-label="About" data-screen-label="About">
       <div class="wrap">
-        <div class="section-label"><span>about</span></div>
+        <div class="section-label">
+          <span><span class="hash">#</span> about</span>
+          <span class="line"></span>
+        </div>
         <div class="about-grid">
           <div class="about">
-            <p>I'm an ML researcher and engineer focused on how we measure AI — the datasets, benchmarks, and evaluation methods that decide whether a system actually works once it meets real users.</p>
-            <p>My career has moved between academia and industry: a Stanford PhD in biomedical informatics, research at Magic Leap, Sirona, and Cruise, five years co-leading an AI center at UIC, and now leading ML at Upwork on agentic evaluation.</p>
+            <p>I'm an <strong>ML researcher and engineer</strong> focused on how we measure AI — the datasets, benchmarks, and evaluation methods that decide whether a system actually works once it meets real users.</p>
+            <p>My career has moved between academia and industry: a <strong>Stanford PhD</strong> in biomedical informatics, research at <strong>Magic Leap</strong>, Sirona, and <strong>Cruise</strong>, five years co-leading an AI center at <strong>UIC</strong>, and now leading ML at <strong>Upwork</strong> on agentic evaluation.</p>
             <p>Outside work I make small web tools, take photographs, and try to live a little more intentionally.</p>
           </div>
           <div class="about-side">
-            <a href="https://www.linkedin.com/in/darvinyi/" class="pill" target="_blank" rel="noopener noreferrer">linkedin</a>
-            <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">scholar</a>
-            <a href="mailto:yidarvin@gmail.com" class="pill accent">say hi</a>
+            <a href="https://www.linkedin.com/in/darvinyi/" class="pill" target="_blank" rel="noopener noreferrer">linkedin <span class="arrow">↗</span></a>
+            <a href="https://scholar.google.com/citations?user=dpb-d38AAAAJ&amp;hl=en" class="pill" target="_blank" rel="noopener noreferrer">scholar <span class="arrow">↗</span></a>
+            <a href="https://www.instagram.com/darvinistrying/" class="pill" target="_blank" rel="noopener noreferrer">instagram <span class="arrow">↗</span></a>
+            <a href="/cdn-cgi/l/email-protection#cfb6a6abaebdb9a6a18fa8a2aea6a3e1aca0a2" class="pill accent">say hi <span class="arrow">↗</span></a>
           </div>
         </div>
       </div>
@@ -507,14 +1337,14 @@
 
   <footer>
     <div class="footer-inner">
-      <span>© 2026 darvin yi</span>
-      <a href="#hero">back to top ↑</a>
+      <span>© 2026 darvin yi · built with intent</span>
+      <a href="#hero">↑ back to top</a>
     </div>
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Subtle scroll reveal — same DNA as the canvas preview.
     (function () {
+      // Subtle scroll reveal
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window)) {
         els.forEach(function (e) { e.classList.add('in'); });
